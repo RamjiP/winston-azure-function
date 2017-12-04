@@ -1,33 +1,37 @@
 var Transport = require('winston-transport'),
     winston = require('winston');
 
-module.exports = class WinstonAzureFunction extends Transport {
+winston.transports.AzureFunction = module.exports = class WinstonAzureFunction extends Transport {
 
 
     constructor(opts) {
         super(opts);
 
         this.name = 'azure-functions';
-        this.context = options.context;
-        this.level = options.level || 'info';
+        this.context = opts.context;
+        this.level = opts.level || 'info';
 
         return this;
     }
 
     log(info, callback) {
-        setImmediate(function () {
-            this.emit('logged', info);
-        });
+        var msgType = typeof info.message;
+        var msgIsObject = msgType === 'object';
 
         // Perform the writing to the remote service
         if (this.context.log[level]) {
-            this.context.log[level]('[' + level + '] ' + message);
+            if (msgIsObject) {
+                this.context.log[info.level](info.message);    
+            } else {
+                this.context.log[info.level]('[' + info.level + '] ' + info.message);
+            }
         } else {
-            this.context.log('[' + level + '] ' + message);
+            if (msgIsObject) {
+                this.context.log(info.message);    
+            } else {
+                this.context.log('[' + info.level + '] ' + info.message);
+            }
         }
         callback();
     }
 }
-
-
-winston.transports.AzureFunction = WinstonAzureFunction;
