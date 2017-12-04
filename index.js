@@ -1,4 +1,5 @@
-var Transport = require('winston-transport');
+var Transport = require('winston-transport'),
+    winston = require('winston');
 
 module.exports = class WinstonAzureFunction extends Transport {
 
@@ -27,3 +28,6 @@ module.exports = class WinstonAzureFunction extends Transport {
         callback();
     }
 }
+
+
+winston.transports.AzureFunction = WinstonAzureFunction;
