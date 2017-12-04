@@ -1,6 +1,6 @@
 {
   "name": "winston-azure-function",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A winston logging for azure function",
   "main": "index.js",
   "scripts": {
