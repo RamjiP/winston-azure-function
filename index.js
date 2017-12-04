@@ -19,7 +19,7 @@ winston.transports.AzureFunction = module.exports = class WinstonAzureFunction e
         var msgIsObject = msgType === 'object';
 
         // Perform the writing to the remote service
-        if (this.context.log[level]) {
+        if (this.context.log[info.level]) {
             if (msgIsObject) {
                 this.context.log[info.level](info.message);    
             } else {
